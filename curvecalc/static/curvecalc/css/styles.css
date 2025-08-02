@@ -1,0 +1,9 @@
+body {
+    background-image: url("../img/Poland_field_storm.jpg");
+    background-size: cover;
+    opacity: 0.9;
+}
+
+#staticChart {
+    background-color: #f0e2d2;
+}

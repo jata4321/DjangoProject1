@@ -1,0 +1,65 @@
+{% extends 'navigator\base.html' %}
+
+{% block static %}
+    {{ block.super }}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'curvecalc\css\styles.css' %}">
+{% endblock %}
+
+{% block title %}
+    <title>CurveCalc</title>
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="jumbotron">
+            <p class="display-1">Yield Curve Calculator</p>
+            <p class="display-4">Class Based View {{ sum }}.</p>
+            <ol>
+                <li><a href="{% url 'navigator:index' %}">Navigator Page</a></li>
+                <li><a href="{% url 'portcalc:index' %}">Portfolio Calculator</a></li>
+                <li><a href="{% url 'curvecalc:curve_list' %}">Curvecalc List</a></li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block chart %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                {% include 'curvecalc/chart.html' %}
+            </div>
+            <div class='col-md-6'>
+                <canvas id="staticChart" style="background-color: rgb(255,255,255); height: 550px;" class="container"></canvas>
+                    <script>
+                        new Chart(document.getElementById('staticChart'), {
+                            type: 'bar',
+                            data: {
+                                labels: {{ labels|safe }},
+                                datasets: [{
+                                    label: 'Użytkownicy',
+                                    data: {{ data|safe }},
+                                    backgroundColor: 'rgba(54, 162, 235, 0.9)'
+                                }],
+                            },
+                        });
+                    </script>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock chart %}
+
+{% block footer %}
+<br>
+<p><small>Footer:</small></p>
+    <small> &copy; Copyright TJ. 2025. <em>All</em> rights reserved.</small>
+{% endblock %}
+
+{#TODO: siła trendu to wielkość spadku za ostatnie 3 miesiące w stosunku do 3 miesięcznego odchylenia standardowego#}

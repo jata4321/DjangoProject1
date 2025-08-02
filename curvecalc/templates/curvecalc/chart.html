@@ -1,0 +1,46 @@
+<canvas id="staticChart2" style="background-color: rgb(255,255,255);
+height: 550px;" class="container"></canvas>
+
+    <script>
+    new Chart(document.getElementById('staticChart2'), {
+        type: 'line',
+        data: {
+            labels: {{ labels|safe }},
+            datasets: [{
+                label: 'Czas',
+                data: {{ data|safe }},
+                backgroundColor: 'rgba(223,49,69,0.99)',
+                borderColor: 'rgb(223,49,69)',
+                borderWidth: 5,
+                tension: 0.2,
+                yAxisID: 'y-axis-1'
+                },
+                {label: 'Wzrost',
+                data: [1,3,5,2],
+                backgroundColor: 'rgb(123,253,1)',
+                borderColor: 'rgb(123,253,1)',
+                borderWidth: 5,
+                tension: 0.2,
+                yAxisID: 'y-axis-2',
+                }],
+        },
+           options: {
+                        scales: {
+                            'y-axis-1': {
+                                position: 'left',
+                                ticks: {
+                                    beginAtZero: true,
+                                    color: 'rgb(223,49,69)',
+                                }
+                            },
+                            'y-axis-2': {
+                                position: 'right',
+                                ticks: {
+                                    beginAtZero: true,
+                                    color: 'rgb(104,223,49)',
+                                }
+                            }
+                        }
+                    },
+    });
+</script>

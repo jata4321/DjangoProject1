@@ -1,0 +1,24 @@
+{% extends "navigator\base.html" %}
+
+{% block static %}
+    {{ block.super }}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'curvecalc\css\styles.css' %}">
+{% endblock %}
+
+{% block title %}
+    <title>CurveCreate</title>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">Create Curve</h1>
+        <form method="post">
+        {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="btn btn-primary" value="Create">
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "navigator\base.html" %}
+
+{% block static %}
+    {{ block.super }}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'curvecalc\css\styles.css' %}">
+{% endblock %}
+
+{% block title %}
+    <title>CurveDetail</title>
+{%  endblock title %}
+
+{% block content %}
+<br>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-1">Yield Curves.</h1>
+            <ol>
+                <li><a href="{% url 'navigator:index' %}">Navigator Page</a></li>
+                <li><a href="{% url 'curvecalc:index' %}">Curvecals Page</a></li>
+                <li><a href="{% url 'curvecalc:curve_list' %}">Curvecals List</a></li>
+                <li><a href="{% url 'portcalc:index' %}">Portfolio Calculator</a></li>
+            </ol>
+        </div>
+    </div>
+
+<div class="container jumbotron">
+    <p class="display-4">{{ tenor }}</p>
+    <p class="h2">All Tenors:</p>
+    {{ tenor.type_name }}
+    <table class="table-bordered table-striped">
+        <thead>
+            <tr>
+                <td>Tenor:</td>
+                <td>Date:{{ tenor.date }}</td>
+            </tr>
+        </thead>
+        <tr><td>1Y:</td><td>{{ tenor.tenor_1y }}</td></tr>
+        <tr><td>2Y:</td><td>{{ tenor.tenor_2y }}</td></tr>
+        <tr><td>5Y:</td><td>{{ tenor.tenor_5y }}</td></tr>
+        <tr><td>7Y:</td><td>{{ tenor.tenor_7y }}</td></tr>
+        <tr><td>10Y:</td><td>{{ tenor.tenor_10y }}</td></tr>
+    </table>
+
+
+</div>
+{% endblock %}
+

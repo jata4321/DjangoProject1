@@ -1,0 +1,40 @@
+{% extends 'navigator\base.html' %}
+
+{% block static %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'curvecalc\css\styles.css' %}">
+{% endblock %}
+
+{% block title %}
+    <title>CurveCalc</title>
+{% endblock %}
+
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">Yield Curve Calculator+.</h1>
+            <ol>
+                <li><a href="{% url 'navigator:index' %}">Navigator Page</a></li>
+                <li><a href="{% url 'portcalc:index' %}">Portfolio Calculator</a></li>
+                <li><a href="{% url 'curvecalc:home' %}">Curvecalc Home</a></li>
+                <li><a href="{% url 'curvecalc:curve_list' %}">Curvecalc List</a></li>
+                <li><a href="{% url 'curvecalc:curve_create' %}">Curvecalc Create</a></li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block chart %}
+    <div class="container">
+        <canvas id="myChart"></canvas>
+    {{ chart|safe }}
+    </div>
+{% endblock chart%}
+
+{% block footer %}
+<br>
+<p><small>Footer:</small></p>
+    <small> &copy; Copyright TJ. 2025. <em>All</em> rights reserved.</small>
+{% endblock %}
+

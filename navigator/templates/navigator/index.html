@@ -1,0 +1,35 @@
+{% extends 'navigator\base.html' %}
+
+{% block static %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'navigator\css\styles.css' %}">
+{% endblock %}
+
+{% block title %}
+    <title>Navigator</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <p class="display-1">Navigator</p>
+        <p class="display-4">Class Based View Navigator Page</p>
+        <ul>
+            <li><a href="{% url 'curvecalc:index' %}" class="h5">Home CurveCalc</a></li>
+            <li><a href="{% url 'portcalc:index' %}" class="h5">Home PortCalc</a></li>
+            <li><a href="{% url 'curvecalc:curve_list' %}" class="h5">CurveList</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block chart %}
+    <div class="container">
+        <div class="row">
+             <div class="col-md-6">
+                {% include 'navigator/chart.html' %}
+            </div>
+            <div class='col-md-6'>
+                {{ chart|safe }}
+            </div>
+        </div>
+    </div>
+{% endblock chart %}

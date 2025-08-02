@@ -1,0 +1,54 @@
+{% extends 'navigator\base.html' %}
+
+{% block static %}
+    {{ block.super }}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'curvecalc\css\styles.css' %}">
+{% endblock %}
+
+{% block title %}
+    <title>CurveList</title>
+{% endblock %}
+
+{% block content %}
+<hr>
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Yield Curve Calculator+.</h1>
+        <ol>
+            <li><a href="{% url 'navigator:index' %}">Navigator Page</a></li>
+            <li><a href="{% url 'portcalc:index' %}">Portfolio Calculator</a></li>
+        </ol>
+    </div>
+</div>
+<div class="container">
+    <table class="table table-striped table-bordered table-hover table-dark">
+        <thead>
+            <tr class="lead">
+                <th class="scope-col">Tenor</th>
+                <th class="scope-col">Details</th>
+                <th class="scope-col">Update</th>
+                <th class="scope-col">Delete</th>
+            </tr>
+        </thead>
+       {% for tenor in tenor_list %}
+           <tr class="table-active">
+               <td><a href="{% url 'curvecalc:curve_detail' pk=tenor.pk%}">{{ tenor }}</a></td>
+               <td><a href="{% url 'curvecalc:curve_detail' pk=tenor.pk%}" class="btn btn-primary">Details</a></td>
+               <td><a href="{% url 'curvecalc:curve_update' pk=tenor.pk%}" class="btn btn-success">Update</a></td>
+               <td><a href="{% url 'curvecalc:curve_delete' pk=tenor.pk%}" class="btn btn-danger">Delete</a></td>
+           </tr>
+       {% endfor %}
+    </table>
+</div>
+{% endblock %}
+
+{% block chart %}
+{% endblock chart %}
+
+{% block footer %}
+<br>
+<p><small>Footer:</small></p>
+    <small> &copy; Copyright TJ. 2025. <em>All</em> rights reserved.</small>
+{% endblock %}
