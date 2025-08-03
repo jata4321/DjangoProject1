@@ -30,7 +30,7 @@ class Type(models.Model):
         CORPORATION = 'CORP', 'CORP'
 
     country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='country')
-    type_name = models.CharField(max_length=20, choices=Type, default=Type.GOVERNMENT)
+    type_name = models.TextField(max_length=20, choices=Type, default=Type.GOVERNMENT)
     description = models.TextField(null=True, blank=True)
     iso_code = models.CharField(max_length=3, choices=Currency, default=Currency.PLN)
     currency = models.CharField(max_length=3)

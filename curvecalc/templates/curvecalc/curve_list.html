@@ -36,7 +36,7 @@
            <tr class="table-active">
                <td><a href="{% url 'curvecalc:curve_detail' pk=tenor.pk%}">{{ tenor }}</a></td>
                <td><a href="{% url 'curvecalc:curve_detail' pk=tenor.pk%}" class="btn btn-primary">Details</a></td>
-               <td><a href="{% url 'curvecalc:curve_update' pk=tenor.pk%}" class="btn btn-success">Update</a></td>
+               <td><a href="{% url 'curvecalc:curve_update' pk=tenor.pk%}" class="btn btn-warning">Update</a></td>
                <td><a href="{% url 'curvecalc:curve_delete' pk=tenor.pk%}" class="btn btn-danger">Delete</a></td>
            </tr>
        {% endfor %}

@@ -22,10 +22,15 @@
                 <li><a href="{% url 'curvecalc:curve_list' %}">Curvecals List</a></li>
                 <li><a href="{% url 'portcalc:index' %}">Portfolio Calculator</a></li>
             </ol>
+        </div>
             <div class="container jumbotron">
                 <p class="display-4">{{ tenor }}</p>
-                <p class="h2">All Tenors:</p>
+                <p class="h1">All Tenors:</p>
                 {{ tenor.type_name }}
+                {{ tenor.type_name.currency }}
+                {{ tenor.type_name.iso_code }}
+
+                <p class="h1">{{ tenor.type_name.description }}</p>
                 <table class="table-bordered table-striped">
                     <thead>
                     <tr>
