@@ -42,16 +42,14 @@
            </tr>
        {% endfor %}
     </table>
-    <div class="card card-body">
+    <div class="btn-group">
         {% if page_obj %}
             {% if page_obj.has_previous %}
-                <a href="?page{{ page_obj.previous_page_number }}">Prev</a>
+                <a type="button" class="btn-primary" href="?page={{ page_obj.previous_page_number }}">Prev</a>
             {% endif %}
-
             {{ page_obj }}
-
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a type='button' class="btn-primary" href="?page={{ page_obj.next_page_number }}">Next</a>
             {% endif %}
         {% endif %}
     </div>
