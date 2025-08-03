@@ -14,7 +14,7 @@
 {% block content %}
 <hr>
 <div class="container">
-    <div class="jumbotron">
+    <div class="card card-body">
         <h1 class="display-4">Yield Curve Calculator+.</h1>
         <ol>
             <li><a href="{% url 'navigator:index' %}">Navigator Page</a></li>
@@ -22,6 +22,7 @@
         </ol>
     </div>
 </div>
+<br>
 <div class="container">
     <table class="table table-striped table-bordered table-hover table-dark">
         <thead>
@@ -41,6 +42,20 @@
            </tr>
        {% endfor %}
     </table>
+    <div class="card card-body">
+        {% if page_obj %}
+            {% if page_obj.has_previous %}
+                <a href="?page{{ page_obj.previous_page_number }}">Prev</a>
+            {% endif %}
+
+            {{ page_obj }}
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            {% endif %}
+        {% endif %}
+    </div>
+
 </div>
 {% endblock %}
 
