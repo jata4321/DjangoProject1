@@ -46,10 +46,13 @@
                     <tr><td>10Y:</td><td>{{ tenor.tenor_10y }}</td></tr>
                 </table>
             </div>
-        <a href="{% url 'curvecalc:curve_list' %}" class="btn btn-primary">Back to Curve List</a>
-        <a href="{% url 'curvecalc:curve_update' pk=tenor.pk %}" class="btn btn-warning">Update</a>
-        <a href="{% url 'curvecalc:curve_delete' pk=tenor.pk %}" class="btn btn-danger">Delete</a>
-        </div>
     </div>
+        <div class="col-md-4 mx-auto">
+            <a href="{% url 'curvecalc:curve_list' %}" class="btn btn-primary">Back to Curve List</a>
+            <a href="{% url 'curvecalc:curve_update' pk=tenor.pk %}" class="btn btn-warning">Update</a>
+            <a href="{% url 'curvecalc:curve_delete' pk=tenor.pk %}" class="btn btn-danger">Delete</a>
+        </div>
+        <br>
+</div>
 {% endblock %}
 

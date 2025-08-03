@@ -44,7 +44,7 @@ class HomePageView(TemplateView):
 class CurveListView(ListView):
     model = Tenor
     template_name = 'curvecalc/curve_list.html'
-    paginate_by = 3
+    paginate_by = 4
 
 class CurveDetailView(DetailView):
     model = Tenor
