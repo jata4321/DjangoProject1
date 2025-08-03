@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Update Curve</title>
-</head>
-<body>
+{% extends 'navigator\base.html' %}
 
-</body>
-</html>
+{% block static %}
+    {{ block.super }}
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'curvecalc\css\styles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="py-1">
+<h1 class="display-1">Update Curve</h1>
+    <div class="container d-flex justify-content-center">
+        <div class="jumbotron col-md-6">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" name="Submit" value="Submit" class="btn btn-lg btn-primary">
+                <button class="button btn btn-lg btn-danger float-right" href="{% url 'curvecalc:curve_list' %}">Back</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content%}

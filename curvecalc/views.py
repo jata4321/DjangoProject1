@@ -59,6 +59,7 @@ class CurveUpdateView(UpdateView):
     model = Tenor
     form_class = CurveForm
     template_name = 'curvecalc/curve_update.html'
+    success_url = '/curvecalc/listview/'
 
 class CurveDeleteView(DeleteView):
     model = Tenor
