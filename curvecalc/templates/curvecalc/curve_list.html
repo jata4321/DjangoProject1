@@ -44,14 +44,14 @@
        {% endfor %}
     </table>
 
-    <div class="pagination pagination-sm justify-content-center">
+    <div class="pagination">
         {% if page_obj %}
             {% if page_obj.has_previous %}
-                <a class="h1 page-item page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+                <a class="h5 page-item btn btn-success" href="?page={{ page_obj.previous_page_number }}">Prev</a>
             {% endif %}
-                <a class="h1 page-item page-link" href="#">{{ page_obj }}</a>
+                <a class="h5 page-item btn btn-secondary" href="#">{{ page_obj }}</a>
             {% if page_obj.has_next %}
-                <a class="h1 page-item page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a class="h5 page-item btn btn-success" href="?page={{ page_obj.next_page_number }}">Next</a>
             {% endif %}
         {% endif %}
     </div>

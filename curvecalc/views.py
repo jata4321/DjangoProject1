@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Tenor
 from .forms import CurveForm
+from .calculations import addition
 
 import plotly.express as px
 
@@ -38,7 +39,7 @@ class HomePageView(TemplateView):
         context['sum'] = sum_of_args
         context['labels'] = ["Styczeń", "Luty", "Marzec", "Kwiecień"]
         context['data'] = [10, 25, 13, 40]
-
+        context['addition'] = addition(10, 25, 1,2,3,4,5)
         return context
 
 class CurveListView(ListView):
