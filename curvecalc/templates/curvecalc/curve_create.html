@@ -12,13 +12,21 @@
 {% endblock %}
 
 {% block content %}
-    <div class="jumbotron">
+    <div class="container">
         <h1 class="display-4">Create Curve</h1>
-        <form method="post">
-        {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" class="btn btn-primary" value="Create">
-        </form>
+        <div class="container d-flex justify-content-center">
+            <div class="jumbotron col-md-6">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-flex justify-content-between">
+                        <input type="submit" class="btn btn-primary" value="Create">
+                        <input type="reset" class="btn btn-warning" value="Reset">
+                        <a href="{% url 'curvecalc:curve_list' %}" class="btn btn-danger">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 {% endblock %}
