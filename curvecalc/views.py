@@ -3,9 +3,9 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Tenor
 from .forms import CurveForm
-from .calculations import addition
-
+from .calculations import addition, nss_curve
 import plotly.express as px
+import numpy as np
 
 # Create your views here.
 def add_args(*args: object) -> object:
@@ -37,9 +37,10 @@ class HomePageView(TemplateView):
         context: dict[str, Any] = super().get_context_data(**kwargs)
         sum_of_args = add_args(1,2,3,4)
         context['sum'] = sum_of_args
-        context['labels'] = ["Styczeń", "Luty", "Marzec", "Kwiecień"]
-        context['data'] = [10, 25, 13, 40]
         context['addition'] = addition(10, 25, 1,2,3,4,5)
+        ytm, t = zip(*nss_curve())
+        context['labels'] =[round(float(val),2) for val in t]
+        context['data'] = [round(float(val),4) for val in ytm]
         return context
 
 class CurveListView(ListView):

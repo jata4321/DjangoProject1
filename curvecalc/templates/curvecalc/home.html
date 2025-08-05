@@ -35,26 +35,22 @@
             </div>
             <div class='col-md-6'>
                 <canvas id="staticChart" style="background-color: rgb(255,255,255); height: 550px;" class="container"></canvas>
-                    <script>
-                        new Chart(document.getElementById('staticChart'), {
-                            type: 'bar',
-                            data: {
-                                labels: {{ labels|safe }},
-                                datasets: [{
-                                    label: 'Użytkownicy',
-                                    data: {{ data|safe }},
-                                    backgroundColor: 'rgba(54, 162, 235, 0.9)'
-                                }],
-                            },
-                        });
-                    </script>
+                <script>
+                    new Chart(document.getElementById('staticChart'), {
+                        type: 'bar',
+                        data: {
+                            labels: {{ labels|safe }},  <!-- Ensure labels are passed from the Django context -->
+                            datasets: [{
+                                label: 'Użytkownicy',
+                                data: {{ data|safe }},
+                                backgroundColor: 'rgba(54, 162, 235, 0.9)'
+                            }],
+                        },
+                    });
+                </script>
             </div>
         </div>
     </div>
-
-
-
-
 {% endblock chart %}
 
 {% block footer %}

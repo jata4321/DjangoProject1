@@ -3,10 +3,10 @@ height: 550px;" class="container"></canvas>
 
     <script>
     new Chart(document.getElementById('staticChart2'), {
-        type: 'line',
         data: {
             labels: {{ labels|safe }},
             datasets: [{
+                type: 'line',
                 label: 'Czas',
                 data: {{ data|safe }},
                 backgroundColor: 'rgba(223,49,69,0.99)',
@@ -15,8 +15,10 @@ height: 550px;" class="container"></canvas>
                 tension: 0.2,
                 yAxisID: 'y-axis-1'
                 },
-                {label: 'Wzrost',
-                data: [1,3,5,2],
+                {
+                type: 'bar',
+                label: 'Zmiana',
+                data: {{ data }},
                 backgroundColor: 'rgb(123,253,1)',
                 borderColor: 'rgb(123,253,1)',
                 borderWidth: 5,
