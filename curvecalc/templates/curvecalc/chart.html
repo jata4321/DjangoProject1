@@ -1,13 +1,12 @@
-<canvas id="staticChart2" style="background-color: rgb(255,255,255);
-height: 550px;" class="container"></canvas>
+<canvas id="staticChart2" style="background-color: rgb(255,255,255); height: 650px"></canvas>
 
     <script>
     new Chart(document.getElementById('staticChart2'), {
         data: {
-            labels: {{ labels|safe }},
+            labels: {{ labels }},
             datasets: [{
                 type: 'line',
-                label: 'Czas',
+                label: 'YTM',
                 data: {{ data|safe }},
                 backgroundColor: 'rgba(223,49,69,0.99)',
                 borderColor: 'rgb(223,49,69)',

@@ -17,7 +17,6 @@
         <div class="jumbotron">
             <p class="display-1">Yield Curve Calculator</p>
             <p class="display-4">Class Based View {{ sum }}.</p>
-            <p>{{ addition }}</p>
             <ol>
                 <li><a href="{% url 'navigator:index' %}">Navigator Page</a></li>
                 <li><a href="{% url 'portcalc:index' %}">Portfolio Calculator</a></li>
@@ -28,20 +27,20 @@
 {% endblock %}
 
 {% block chart %}
-    <div class="container">
+    <div class="container container-fluid">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 {% include 'curvecalc/chart.html' %}
             </div>
-            <div class='col-md-6'>
-                <canvas id="staticChart" style="background-color: rgb(255,255,255); height: 550px;" class="container"></canvas>
+            <div class="col-md-12">
+                <canvas id="staticChart" style="background-color: rgb(255,255,255); max-width: fit-content"></canvas>
                 <script>
                     new Chart(document.getElementById('staticChart'), {
                         type: 'bar',
                         data: {
                             labels: {{ labels|safe }},  <!-- Ensure labels are passed from the Django context -->
                             datasets: [{
-                                label: 'Użytkownicy',
+                                label: 'Forwards',
                                 data: {{ data|safe }},
                                 backgroundColor: 'rgba(54, 162, 235, 0.9)'
                             }],
