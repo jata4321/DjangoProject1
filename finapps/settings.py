@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'curvecalc',
     'portcalc',
     'rollcarry',
+    'bonddb',
 ]
 
 MIDDLEWARE = [
