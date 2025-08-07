@@ -9,8 +9,8 @@ def addition(a: object, b: object, *args) -> int:
     return s
 
 def nss_curve(*kwargs):
-    y = NelsonSiegelSvenssonCurve(0.028, -0.03, -0.04, -0.015, 1.1, 4.0)
-    t = np.linspace(0, 20, 10)
+    y = NelsonSiegelSvenssonCurve(0.028, -0.02, 0.04, 0.05, 1.1, 4.0)
+    t = np.linspace(0, 20, 20)
     curve = y(t)
     yield_curve = zip(curve, t)
     return yield_curve
