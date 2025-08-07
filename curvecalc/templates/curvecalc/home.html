@@ -28,26 +28,25 @@
 
 {% block chart %}
     <div class="container container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                {% include 'curvecalc/chart.html' %}
-            </div>
-            <div class="col-md-12">
-                <canvas id="staticChart" style="background-color: rgb(255,255,255); max-width: fit-content"></canvas>
-                <script>
-                    new Chart(document.getElementById('staticChart'), {
-                        type: 'bar',
-                        data: {
-                            labels: {{ labels|safe }},  <!-- Ensure labels are passed from the Django context -->
-                            datasets: [{
-                                label: 'Forwards',
-                                data: {{ data|safe }},
-                                backgroundColor: 'rgba(54, 162, 235, 0.9)'
-                            }],
-                        },
-                    });
-                </script>
-            </div>
+        <div class="row container col-md-12">
+            {% include 'curvecalc/chart.html' %}
+        </div>
+            <hr>
+        <div class="row container col-md-12">
+            <canvas id="staticChart" style="background-color: rgb(255,255,255); max-width: fit-content"></canvas>
+            <script>
+                new Chart(document.getElementById('staticChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: {{ labels|safe }},  <!-- Ensure labels are passed from the Django context -->
+                        datasets: [{
+                            label: 'Forwards',
+                            data: {{ data|safe }},
+                            backgroundColor: 'rgba(54, 162, 235, 0.9)'
+                        }],
+                    },
+                });
+            </script>
         </div>
     </div>
 {% endblock chart %}
@@ -58,4 +57,4 @@
     <small> &copy; Copyright TJ. 2025. <em>All</em> rights reserved.</small>
 {% endblock %}
 
-{#TODO: siła trendu to wielkość spadku za ostatnie 3 miesiące w stosunku do 3 miesięcznego odchylenia standardowego#}
+{#TODO: siła trendu to wielkość spadku MA za ostatnie 3 miesiące w stosunku do 3 miesięcznego odchylenia standardowego#}
