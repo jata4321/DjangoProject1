@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Any
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Tenor
@@ -9,18 +9,20 @@ import plotly.express as px
 # Create your views here.
 def index(request):
 
-    x = ['sty', 'lut', 'mar', 'kwi']
-    y = [2, 3, 5, 3]
+    x = ['sty', 'lut', 'mar', 'kwi', 'lip']
+    y = [2, 3, 5, 3, 4]
 
     fig = px.bar(x=x,
                  y=y,
-                 height=600, template='ggplot2')
+                 height=600,
+                 template='ggplot2',
+                 )
     fig.update_layout(title_text='Wykres',
                       title_font_size=28,
                       title_y=0.975,
                       title_x=0.5,
                       xaxis_title='Miesiące',
-                      yaxis_title='Waga (kg)'
+                      yaxis_title='Waga (kg)',
                       )
     chart = fig.to_html()
     context = {'chart': chart, 'data': y, 'labels': x}

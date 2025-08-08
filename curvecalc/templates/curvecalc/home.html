@@ -3,7 +3,6 @@
 {% block static %}
     {{ block.super }}
     {% load static %}
-
     <link rel="stylesheet" href="{% static 'curvecalc\css\styles.css' %}">
 {% endblock %}
 
@@ -31,7 +30,6 @@
         <div class="row container col-md-12">
             {% include 'curvecalc/chart.html' %}
         </div>
-            <hr>
         <div class="row container col-md-12">
             <canvas id="staticChart" style="background-color: rgb(255,255,255); max-width: fit-content"></canvas>
             <script>
@@ -42,7 +40,7 @@
                         datasets: [{
                             label: 'Forwards',
                             data: {{ data|safe }},
-                            backgroundColor: 'rgba(54, 162, 235, 0.9)'
+                            backgroundColor: "rgba(54, 162, 235, 0.9)"
                         }],
                     },
                 });
