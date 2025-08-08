@@ -1,29 +1,28 @@
-from typing import Dict, Any
+from typing import Any
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Tenor
 from .forms import CurveForm
 from .calculations import addition, nss_curve
 import plotly.express as px
-import numpy as np
 
 # Create your views here.
-def add_args(*args: object) -> object:
-    return sum(args)
 def index(request):
 
-    x = ['sty', 'lut', 'mar', 'kwi']
-    y = [2, 3, 5, 3]
+    x = ['sty', 'lut', 'mar', 'kwi', 'lip']
+    y = [2, 3, 5, 3, 4]
 
     fig = px.bar(x=x,
                  y=y,
-                 height=600, template='ggplot2')
+                 height=600,
+                 template='ggplot2',
+                 )
     fig.update_layout(title_text='Wykres',
                       title_font_size=28,
                       title_y=0.975,
                       title_x=0.5,
                       xaxis_title='Miesiące',
-                      yaxis_title='Waga (kg)'
+                      yaxis_title='Waga (kg)',
                       )
     chart = fig.to_html()
     context = {'chart': chart, 'data': y, 'labels': x}
@@ -35,8 +34,6 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context: dict[str, Any] = super().get_context_data(**kwargs)
-        sum_of_args = add_args(1,2,3,4)
-        context['sum'] = sum_of_args
         context['addition'] = addition(10, 25, 1,2,3,4,5)
         ytm, t = zip(*nss_curve())
         context['labels'] =[round(float(val),2) for val in t]
@@ -46,7 +43,7 @@ class HomePageView(TemplateView):
 class CurveListView(ListView):
     model = Tenor
     template_name = 'curvecalc/curve_list.html'
-    paginate_by = 4
+    paginate_by = 5
 
 class CurveDetailView(DetailView):
     model = Tenor
@@ -68,5 +65,3 @@ class CurveDeleteView(DeleteView):
     model = Tenor
     template_name = 'curvecalc/curve_delete.html'
     success_url = '/curvecalc/listview/'
-
-
