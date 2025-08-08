@@ -8,8 +8,6 @@ import plotly.express as px
 import numpy as np
 
 # Create your views here.
-def add_args(*args: object) -> object:
-    return sum(args)
 def index(request):
 
     x = ['sty', 'lut', 'mar', 'kwi']
@@ -35,8 +33,6 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context: dict[str, Any] = super().get_context_data(**kwargs)
-        sum_of_args = add_args(1,2,3,4)
-        context['sum'] = sum_of_args
         context['addition'] = addition(10, 25, 1,2,3,4,5)
         ytm, t = zip(*nss_curve())
         context['labels'] =[round(float(val),2) for val in t]
@@ -46,7 +42,7 @@ class HomePageView(TemplateView):
 class CurveListView(ListView):
     model = Tenor
     template_name = 'curvecalc/curve_list.html'
-    paginate_by = 4
+    paginate_by = 5
 
 class CurveDetailView(DetailView):
     model = Tenor
@@ -68,5 +64,3 @@ class CurveDeleteView(DeleteView):
     model = Tenor
     template_name = 'curvecalc/curve_delete.html'
     success_url = '/curvecalc/listview/'
-
-
