@@ -2,7 +2,6 @@ from typing import Tuple, Any
 
 from nelson_siegel_svensson import NelsonSiegelSvenssonCurve
 import numpy as np
-from numpy import ndarray
 
 def addition(a: object, b: object, *args) -> int:
     s = sum([a, b, *args])

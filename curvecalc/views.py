@@ -5,7 +5,6 @@ from .models import Tenor
 from .forms import CurveForm
 from .calculations import addition, nss_curve
 import plotly.express as px
-import numpy as np
 
 # Create your views here.
 def index(request):
