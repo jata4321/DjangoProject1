@@ -18,6 +18,6 @@ def nss_curve(*args:list, **kwargs: dict) -> zip:
         y = NelsonSiegelSvenssonCurve(0.028, -0.02, 0.04, 0.05, 1.1, 4.0)
         t = np.linspace(0, 20, 10)
         curve = y(t)
-    yield_curve = zip(curve, t)
+    yield_curve = zip(curve, y, t)
     return yield_curve
 
