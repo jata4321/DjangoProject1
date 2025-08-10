@@ -14,7 +14,7 @@ def index(request):
 
     fig = px.bar(x=x,
                  y=y,
-                 height=600,
+                 height=500,
                  template='ggplot2',
                  )
     fig.update_layout(title_text='Wykres',
@@ -32,10 +32,10 @@ def index(request):
 class HomePageView(TemplateView):
     template_name = 'curvecalc/home.html'
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *args, **kwargs):
         context: dict[str, Any] = super().get_context_data(**kwargs)
         context['addition'] = addition(10, 25, 1,2,3,4,5)
-        ytm, t = zip(*nss_curve())
+        ytm, t = zip(*nss_curve([1,2,3,5,10], [0.03,0.0325,0.035,0.0365,0.04], y_crv={1:0.03, 2:0.035, 3:0.04}))
         context['labels'] =[round(float(val),2) for val in t]
         context['data'] = [round(float(val),4) for val in ytm]
         return context
@@ -44,6 +44,7 @@ class CurveListView(ListView):
     model = Tenor
     template_name = 'curvecalc/curve_list.html'
     paginate_by = 5
+    ordering = ['-id']
 
 class CurveDetailView(DetailView):
     model = Tenor
