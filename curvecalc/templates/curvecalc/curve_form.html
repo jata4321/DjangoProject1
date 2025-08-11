@@ -1,0 +1,53 @@
+{% extends 'curvecalc/base.html' %}
+
+{% block content %}
+    <div class="container mt-4">
+    {{ block.super }}
+        <h2 class="mb-4">Add New Curve</h2>
+        <p class="fs-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius
+            blandit sit amet non magna. Donec id elit non mi porta gravida at eget metus. Duis mollis, est non commodo
+            luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor
+            fringilla. Nulla vitae elit libero, a pharetra augue. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+            condimentum nibh, ut fermentum massa justo sit amet risus. Vestibulum id ligula porta felis euismod semper.
+            Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet
+            rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna,
+            vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
+            Cras mattis consectetur purus sit amet fermentum.</p>
+        <fieldset class="mb-3 border border-1 border-secondary-subtle p-4 rounded-2 bg-body-tertiary col-md-6 mx-auto">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.type_name.label_tag }}
+                {{ form.type_name }}
+            </div>
+            <div class="mb-3">
+                {{ form.tenor_6m.label_tag }}
+                {{ form.tenor_6m }}
+            </div>
+            <div class="mb-3">
+                {{ form.tenor_1y.label_tag }}
+                {{ form.tenor_1y }}
+            </div>
+            <div class="mb-3">
+                {{ form.tenor_2y.label_tag }}
+                {{ form.tenor_2y }}
+            </div>
+            <div class="mb-3">
+                {{ form.tenor_5y.label_tag }}
+                {{ form.tenor_5y }}
+            </div>
+            <div class="mb-3">
+                {{ form.tenor_7y.label_tag }}
+                {{ form.tenor_7y }}
+            </div>
+            <div class="mb-3">
+                {{ form.tenor_10y.label_tag }}
+                {{ form.tenor_10y }}
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="{% url 'curvecalc:curve_list' %}" class="btn btn-danger">Cancel</a>
+        </form>
+        </fieldset>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'curvecalc\css\pro_styles.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <title>Title</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'navigator:index' %}">CurveCalc</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'curvecalc:curve_list' %}">Lista</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'curvecalc:curve_create' %}">Dodaj</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'curvecalc:home' %}">Wykresy</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'portcalc:index' %}">Usuń</a>
+                </li>
+                <li class="nav-item d-flex mx-auto">
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+                        <button class="btn btn-outline-success mx-auto" type="submit">Search</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% block content %}
+<p class="display-1">Curve Calc</p>
+{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>

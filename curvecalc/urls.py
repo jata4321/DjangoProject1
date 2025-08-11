@@ -11,4 +11,5 @@ urlpatterns = [
     path('createview/', views.CurveCreateView.as_view(), name='curve_create'),
     path('updateview/<int:pk>/', views.CurveUpdateView.as_view(), name='curve_update'),
     path('deleteview/<int:pk>/delete/', views.CurveDeleteView.as_view(), name='curve_delete'),
+    path('formview/', views.AddCurveView.as_view(), name='curve_form'),
 ]

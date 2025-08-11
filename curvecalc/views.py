@@ -1,12 +1,18 @@
 from typing import Any
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from .models import Tenor
 from .forms import CurveForm
 from .calculations import addition, nss_curve
 import plotly.express as px
 
 # Create your views here.
+
+class AddCurveView(FormView):
+    template_name = 'curvecalc/curve_form.html'
+    form_class = CurveForm
+    success_url = '/curvecalc/listview/'
+
 def index(request):
 
     x = ['sty', 'lut', 'mar', 'kwi', 'lip']
@@ -15,7 +21,7 @@ def index(request):
     fig = px.bar(x=x,
                  y=y,
                  height=500,
-                 template='ggplot2',
+                 template='presentation',
                  )
     fig.update_layout(title_text='Wykres',
                       title_font_size=28,
