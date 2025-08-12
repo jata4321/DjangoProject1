@@ -8,11 +8,8 @@
             blandit sit amet non magna. Donec id elit non mi porta gravida at eget metus. Duis mollis, est non commodo
             luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor
             fringilla. Nulla vitae elit libero, a pharetra augue. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-            condimentum nibh, ut fermentum massa justo sit amet risus. Vestibulum id ligula porta felis euismod semper.
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet
-            rutrum faucibus dolor auctor. Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna,
-            vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.
-            Cras mattis consectetur purus sit amet fermentum.</p>
+            condimentum nibh, ut fermentum massa justo sit amet risus.
+        </p>
         <fieldset class="mb-3 border border-1 border-secondary-subtle p-4 rounded-2 bg-body-tertiary col-md-6 mx-auto">
         <form method="POST">
             {% csrf_token %}
@@ -48,6 +45,12 @@
             <a href="{% url 'curvecalc:curve_list' %}" class="btn btn-danger">Cancel</a>
         </form>
         </fieldset>
-
     </div>
+    <p class="fs-6">
+          {% if form %}
+            {% for field in form %}
+               {{ field.value }}
+            {% endfor %}
+        {% endif %}
+    </p>
 {% endblock %}

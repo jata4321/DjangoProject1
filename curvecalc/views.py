@@ -8,11 +8,6 @@ import plotly.express as px
 
 # Create your views here.
 
-class AddCurveView(FormView):
-    template_name = 'curvecalc/curve_form.html'
-    form_class = CurveForm
-    success_url = '/curvecalc/listview/'
-
 def index(request):
 
     x = ['sty', 'lut', 'mar', 'kwi', 'lip']
@@ -73,3 +68,18 @@ class CurveDeleteView(DeleteView):
     model = Tenor
     template_name = 'curvecalc/curve_delete.html'
     success_url = '/curvecalc/listview/'
+
+class AddCurveView(FormView):
+    template_name = 'curvecalc/curve_form.html'
+    form_class = CurveForm
+
+    def __init__(self, **kwargs: Any):
+        super().__init__(**kwargs)
+        self.cleaned = None
+
+    def form_valid(self, form):
+        form = form.get_context()
+        return self.render_to_response(form)
+
+class CurveDataView(TemplateView):
+    template_name = 'curvecalc/form_data.html'

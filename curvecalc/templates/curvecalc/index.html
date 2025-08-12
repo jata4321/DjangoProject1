@@ -2,7 +2,7 @@
 
 {% block static %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'curvecalc\css\styles.css' %}">
+    <link rel="stylesheet" href="{% static 'curvecalc\css\pro_styles.css' %}">
 {% endblock %}
 
 {% block title %}
@@ -20,6 +20,7 @@
                 <li><a href="{% url 'curvecalc:home' %}">Curvecalc Home</a></li>
                 <li><a href="{% url 'curvecalc:curve_list' %}">Curvecalc List</a></li>
                 <li><a href="{% url 'curvecalc:curve_create' %}">Curvecalc Create</a></li>
+                <li><a href="{% url 'curvecalc:curve_form' %}">Curve Form</a></li>
             </ol>
         </div>
     </div>
@@ -27,7 +28,6 @@
 
 {% block chart %}
     <div class="container">
-        <canvas id="myChart"></canvas>
     {{ chart|safe }}
     </div>
 {% endblock chart%}
