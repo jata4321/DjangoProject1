@@ -46,11 +46,10 @@
         </form>
         </fieldset>
     </div>
-    <p class="fs-6">
-          {% if form %}
-            {% for field in form %}
-               {{ field.value }}
-            {% endfor %}
-        {% endif %}
+    {% if chart %}
+    <p class="fs-1" style="text-align: center">
+        Chart plot:
+        {{ chart|safe }}
     </p>
+    {% endif %}
 {% endblock %}

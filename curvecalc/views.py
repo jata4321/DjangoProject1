@@ -5,6 +5,7 @@ from .models import Tenor
 from .forms import CurveForm
 from .calculations import addition, nss_curve
 import plotly.express as px
+from itertools import islice
 
 # Create your views here.
 
@@ -78,8 +79,18 @@ class AddCurveView(FormView):
         self.cleaned = None
 
     def form_valid(self, form):
-        form = form.get_context()
-        return self.render_to_response(form)
+        self.cleaned = form.cleaned_data
+        data = { 0.5: self.cleaned['tenor_6m'],
+            1: self.cleaned['tenor_1y'],
+            2: self.cleaned['tenor_2y'],
+            5: self.cleaned['tenor_5y'],
+            7: self.cleaned['tenor_7y'],
+            10: self.cleaned['tenor_10y']}
+        data = {k: v for k, v in data.items() if v is not None}
+        chart = nss_curve(t=list(data.keys()), y=list(data.values()))
+        context = {'form': form, 'chart': chart, 'data': data}
+        return self.render_to_response(context)
+
 
 class CurveDataView(TemplateView):
     template_name = 'curvecalc/form_data.html'
