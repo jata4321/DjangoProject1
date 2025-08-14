@@ -10,6 +10,7 @@
             fringilla. Nulla vitae elit libero, a pharetra augue. Fusce dapibus, tellus ac cursus commodo, tortor mauris
             condimentum nibh, ut fermentum massa justo sit amet risus.
         </p>
+    <br>
         <fieldset class="mb-3 border border-1 border-secondary-subtle p-4 rounded-2 bg-body-tertiary col-md-6 mx-auto">
         <form method="POST">
             {% csrf_token %}
@@ -47,13 +48,14 @@
         </fieldset>
     <div>
         {% if chart_nss %}
-            <p class="fs-1" style="text-decoration:underline wavy darkseagreen; text-align: center">Chart Plots</p>
+            <p class="display-3" style="padding-top:40px; text-decoration:underline wavy rgba(143,188,143,0.56); text-align: center">Chart Plots</p>
             {{ chart_fwd|safe }}
     {% endif %}
     </div>
-    <hr>
+    <div>
+        {% if chart_nss %}
+        <hr>
+          {{ chart_nss|safe }}
+        {% endif %}
     </div>
-    {% if chart_nss %}
-      {{ chart_nss|safe }}
-    {% endif %}
 {% endblock %}
