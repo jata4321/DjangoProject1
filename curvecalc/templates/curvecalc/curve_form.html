@@ -45,11 +45,15 @@
             <a href="{% url 'curvecalc:curve_list' %}" class="btn btn-danger">Cancel</a>
         </form>
         </fieldset>
+    <div>
+        {% if chart_nss %}
+            <p class="fs-1" style="text-decoration:underline wavy darkseagreen; text-align: center">Chart Plots</p>
+            {{ chart_fwd|safe }}
+    {% endif %}
     </div>
-    {% if chart %}
-    <p class="fs-1" style="text-align: center">
-        Chart plot:
-        {{ chart|safe }}
-    </p>
+    <hr>
+    </div>
+    {% if chart_nss %}
+      {{ chart_nss|safe }}
     {% endif %}
 {% endblock %}

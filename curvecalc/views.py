@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
 from .models import Tenor
 from .forms import CurveForm
-from .calculations import addition, nss_curve
+from .calculations import addition, nss_curve, forward_curve
 import plotly.express as px
 from itertools import islice
 
@@ -87,8 +87,9 @@ class AddCurveView(FormView):
             7: self.cleaned['tenor_7y'],
             10: self.cleaned['tenor_10y']}
         data = {k: v for k, v in data.items() if v is not None}
-        chart = nss_curve(t=list(data.keys()), y=list(data.values()))
-        context = {'form': form, 'chart': chart, 'data': data}
+        chart_nss = nss_curve(t=list(data.keys()), y=list(data.values()))
+        chart_fwd = forward_curve(t=list(data.keys()), y=list(data.values()), forward_length_months=12)
+        context = {'form': form, 'chart_nss': chart_nss, 'chart_fwd':chart_fwd, 'data': data}
         return self.render_to_response(context)
 
 
