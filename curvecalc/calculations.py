@@ -1,5 +1,4 @@
 from nelson_siegel_svensson.calibrate import calibrate_nss_ols
-from nelson_siegel_svensson.ns import NelsonSiegelCurve
 import numpy as np
 import plotly.express as px
 from typing import Optional, List, Dict, Union, Any
@@ -47,7 +46,7 @@ def forward_curve(t: List[float], y: List[float], forward_length_months=3, *args
                 yaxis='y2',
                 opacity=0.33)
     fig.update_layout(title_text=f'{ forward_length_months }m Forward Curve',
-                      title_font_size=29,
+                      title_font_size=30,
                       xaxis_title='Years',
                       yaxis_title='Yield p.a. [%]',
                       yaxis2=dict(title='Spread p.a. [b.p]', overlaying='y', side='right', showgrid=False, ),
@@ -90,7 +89,7 @@ def nss_curve(t: List[float], y: List[float], *args: List[Any], **kwargs: Dict[s
                 yaxis='y2',
                 opacity=0.33)
     fig.update_layout(title_text='Nelson-Siegel-Svensson Curve',
-              title_font_size=29,
+              title_font_size=30,
               title_y=0.975,
               title_x=0.5,
               xaxis_title='Years',
@@ -107,6 +106,3 @@ def nss_curve(t: List[float], y: List[float], *args: List[Any], **kwargs: Dict[s
                       )
     fig_nss = fig.to_html()
     return fig_nss
-
-
-

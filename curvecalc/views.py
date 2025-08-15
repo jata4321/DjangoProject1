@@ -5,7 +5,6 @@ from .models import Tenor
 from .forms import CurveForm
 from .calculations import addition, nss_curve, forward_curve
 import plotly.express as px
-from itertools import islice
 
 # Create your views here.
 
