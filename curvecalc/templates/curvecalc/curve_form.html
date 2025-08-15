@@ -42,20 +42,27 @@
                 {{ form.tenor_10y.label_tag }}
                 {{ form.tenor_10y }}
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="{% url 'curvecalc:curve_list' %}" class="btn btn-danger">Cancel</a>
+            <div class="d-grid gap-2 d-md-flex align-items-center">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{% url 'curvecalc:curve_list' %}" class="btn btn-danger">Cancel</a>
+                <label for="add_to_database justify-content-md-end">
+                    <input class='form-check-input' type="checkbox" name="add_to_database" value="chart_nss">
+                    Add to a database.
+                </label>
+            </div>
         </form>
         </fieldset>
-    <div>
-        {% if chart_nss %}
-            <p class="display-3" style="padding-top:40px; text-decoration:underline wavy rgba(143,188,143,0.56); text-align: center">Chart Plots</p>
-            {{ chart_fwd|safe }}
-    {% endif %}
-    </div>
-    <div>
-        {% if chart_nss %}
-        <hr>
-          {{ chart_nss|safe }}
+        <div>
+            {% if chart_nss %}
+                <p class="display-3" style="padding-top:40px; text-decoration:underline wavy rgba(143,188,143,0.56); text-align: center">Chart Plots</p>
+                {{ chart_fwd|safe }}
         {% endif %}
+        </div>
+        <div>
+            {% if chart_nss %}
+            <hr>
+              {{ chart_nss|safe }}
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
