@@ -79,6 +79,7 @@ class AddCurveView(FormView):
 
     def form_valid(self, form):
         self.cleaned = form.cleaned_data
+        data_old = {k:v for k, v in form.cleaned_data.items() if v is not None}
         data = { 0.5: self.cleaned['tenor_6m'],
             1: self.cleaned['tenor_1y'],
             2: self.cleaned['tenor_2y'],
@@ -88,7 +89,7 @@ class AddCurveView(FormView):
         data = {k: v for k, v in data.items() if v is not None}
         chart_nss = nss_curve(t=list(data.keys()), y=list(data.values()))
         chart_fwd = forward_curve(t=list(data.keys()), y=list(data.values()), forward_length_months=6)
-        context = {'form': form, 'chart_nss': chart_nss, 'chart_fwd':chart_fwd, 'data': data}
+        context = {'form': form, 'chart_nss': chart_nss, 'chart_fwd':chart_fwd, 'data': data, 'data_old': data_old}
         return self.render_to_response(context)
 
 
