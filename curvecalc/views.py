@@ -90,6 +90,7 @@ class AddCurveView(FormView):
         chart_nss = nss_curve(t=list(data.keys()), y=list(data.values()))
         chart_fwd = forward_curve(t=list(data.keys()), y=list(data.values()), forward_length_months=6)
         context = {'form': form, 'chart_nss': chart_nss, 'chart_fwd':chart_fwd, 'data': data, 'data_old': data_old}
+
         action = self.request.POST.get('action')
         if action == 'save':
             form.save()
