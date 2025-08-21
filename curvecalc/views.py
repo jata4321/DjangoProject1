@@ -1,3 +1,5 @@
+from decimal import Decimal
+from locale import localize
 from typing import Any
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
@@ -5,6 +7,9 @@ from .models import Tenor
 from .forms import CurveForm
 from .calculations import addition, nss_curve, forward_curve
 import plotly.express as px
+from django.utils import timezone
+from datetime import datetime
+from .forms import DateRangeForm
 
 # Create your views here.
 
@@ -46,7 +51,27 @@ class CurveListView(ListView):
     model = Tenor
     template_name = 'curvecalc/curve_list.html'
     paginate_by = 5
-    ordering = ['-id']
+    ordering = ['-pk']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        start_date = self.request.GET.get('start_date')
+        end_date = self.request.GET.get('end_date')
+
+        if start_date:
+            start_date = datetime.fromisoformat(start_date)
+            queryset = queryset.filter(date__gte=start_date)
+        if end_date:
+            end_date = datetime.fromisoformat(end_date)
+            queryset = queryset.filter(date__lte=end_date)
+        
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['date_form'] = DateRangeForm(self.request.GET)
+        return context
+
 
 class CurveDetailView(DetailView):
     model = Tenor
@@ -69,13 +94,16 @@ class CurveDeleteView(DeleteView):
     template_name = 'curvecalc/curve_delete.html'
     success_url = '/curvecalc/listview/'
 
+
+
 class AddCurveView(FormView):
     template_name = 'curvecalc/curve_form.html'
     form_class = CurveForm
 
-    def __init__(self, **kwargs: Any):
-        super().__init__(**kwargs)
+    def __init__(self, *args, **kwargs: Any):
+        super().__init__(*args, **kwargs)
         self.cleaned = None
+
 
     def form_valid(self, form):
         self.cleaned = form.cleaned_data

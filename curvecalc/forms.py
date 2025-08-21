@@ -16,3 +16,19 @@ class CurveForm(forms.ModelForm):
             'tenor_7y': forms.NumberInput(attrs={'class': 'form-control'}),
             'tenor_10y': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+class DateRangeForm(forms.Form):
+    start_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={
+            'type': 'datetime-local',
+            'class': 'form-control'
+        }),
+        required=False
+    )
+    end_date = forms.DateTimeField(
+        widget=forms.DateTimeInput(attrs={
+            'type': 'datetime-local',
+            'class': 'form-control'
+        }),
+        required=False
+    )
