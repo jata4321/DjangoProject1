@@ -1,12 +1,11 @@
 from typing import Any
 from django.shortcuts import render
-from django.urls import reverse
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
-
 from .models import Tenor
 from .forms import CurveForm
 from .calculations import addition, nss_curve, forward_curve
 import plotly.express as px
+from django.utils import timezone
 from datetime import datetime
 from .forms import DateRangeForm
 
@@ -40,7 +39,7 @@ class HomePageView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context: dict[str, Any] = super().get_context_data(**kwargs)
         context['addition'] = addition(10, 25, 1,2,3,4,5)
-        t, ytm, y = ([0.5,1,2,5,10], [0.027,0.03,0.032,0.0365,0.04], [0.027,0.03,0.032,0.0365,0.04])
+        t, y, ytm = ([0.5,1,2,5,10], [0.027,0.03,0.032,0.0365,0.04], [0.03, 0.04,0.045,0.043,0.04])
         context['labels'] =[round(float(val),2) for val in t]
         context['data'] = [round(float(val),4) for val in ytm]
         context['ytm'] = [round(float(val),4) for val in y]
@@ -86,7 +85,7 @@ class CurveUpdateView(UpdateView):
     model = Tenor
     form_class = CurveForm
     template_name = 'curvecalc/curve_update.html'
-    success_url = 'curvecalc/listview/'
+    success_url = '/curvecalc/listview/'
 
 class CurveDeleteView(DeleteView):
     model = Tenor
@@ -94,15 +93,14 @@ class CurveDeleteView(DeleteView):
     success_url = '/curvecalc/listview/'
 
 
-
 class AddCurveView(FormView):
-    model = Tenor
     template_name = 'curvecalc/curve_form.html'
     form_class = CurveForm
 
     def __init__(self, *args, **kwargs: Any):
         super().__init__(*args, **kwargs)
         self.cleaned = None
+
 
     def form_valid(self, form):
         self.cleaned = form.cleaned_data
@@ -116,18 +114,14 @@ class AddCurveView(FormView):
         data = {k: v for k, v in data.items() if v is not None}
         chart_nss = nss_curve(t=list(data.keys()), y=list(data.values()))
         chart_fwd = forward_curve(t=list(data.keys()), y=list(data.values()), forward_length_months=6)
-        context = {'form': form,
-                   'chart_nss': chart_nss,
-                   'chart_fwd':chart_fwd,
-                   'data': data,
-                   'data_old': data_old,
-                   }
+        context = {'form': form, 'chart_nss': chart_nss, 'chart_fwd':chart_fwd, 'data': data, 'data_old': data_old}
 
         action = self.request.POST.get('action')
         if action == 'save':
             form.save()
 
         return self.render_to_response(context)
+
 
 class CurveDataView(TemplateView):
     template_name = 'curvecalc/form_data.html'
