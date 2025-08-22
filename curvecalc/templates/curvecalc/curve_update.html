@@ -15,8 +15,8 @@
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <input type="submit" name="Submit" value="Submit" class="btn btn-lg btn-primary">
-                <button class="button btn btn-lg btn-danger float-right" href="{% url 'curvecalc:curve_list' %}">Back</button>
+                <input type="submit" name="Submit" value="Submit" class="btn btn-primary">
+                <button class="button btn btn-danger float-right" href="{% url 'curvecalc:curve_list' %}">Back</button>
             </form>
         </div>
     </div>

@@ -1,17 +1,19 @@
 from nelson_siegel_svensson.calibrate import calibrate_nss_ols
 import numpy as np
 import plotly.express as px
-from typing import Optional, List, Dict, Union, Any
+from typing import Optional, List
 
 
 def addition(a: object, b: object, *args) -> int:
     s = sum([a, b, *args])
     return s
 
-def nss_calibrator(t:List[float], y:List[float]):
+def nss_calibrator(t:List, y:List):
     if t is not None and y is not None:
-        t = np.asarray(t)
-        y = np.asarray(y)/100
+
+        t = np.asarray(t[1:])
+        y = np.asarray(y[1:]) / 100
+
         calibration, status = calibrate_nss_ols(t, y)
         return calibration
     return None
@@ -23,7 +25,7 @@ def nss_constructor(calibration, t:List[float]):
     points = np.asarray([calibration(_).round(5) for _ in t])
     return curve_nss, curve_t, points
 
-def forward_curve(t: List[float], y: List[float], forward_length_months=3, *args: List[Any], **kwargs: Dict[str, Any]) -> Optional[str]:
+def forward_curve(t: List[float], y: List[float], forward_length_months=3) -> Optional[str]:
     calibration = nss_calibrator(t, y)
     start_date = t[0]
     end_date = t[-1]
@@ -61,7 +63,7 @@ def forward_curve(t: List[float], y: List[float], forward_length_months=3, *args
     fig_fwd = fig.to_html()
     return fig_fwd
 
-def nss_curve(t: List[float], y: List[float], *args: List[Any], **kwargs: Dict[str, Any]) -> Optional[str]:
+def nss_curve(t: List[float], y: List[float]) -> Optional[str]:
 
     calibration = nss_calibrator(t, y)
     curve_nss, curve_t, points = nss_constructor(calibration=calibration, t=t)
