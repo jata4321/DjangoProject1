@@ -40,7 +40,7 @@ class HomePageView(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context: dict[str, Any] = super().get_context_data(**kwargs)
         context['addition'] = addition(10, 25, 1,2,3,4,5)
-        ytm, y, t = zip(*nss_curve([0.5,1,2,5,10], [0.027,0.03,0.032,0.0365,0.04]))
+        t, ytm, y = ([0.5,1,2,5,10], [0.027,0.03,0.032,0.0365,0.04], [0.027,0.03,0.032,0.0365,0.04])
         context['labels'] =[round(float(val),2) for val in t]
         context['data'] = [round(float(val),4) for val in ytm]
         context['ytm'] = [round(float(val),4) for val in y]
@@ -86,11 +86,7 @@ class CurveUpdateView(UpdateView):
     model = Tenor
     form_class = CurveForm
     template_name = 'curvecalc/curve_update.html'
-
-    def get_success_url(self):
-        return reverse('curvecalc:curve_list')
-
-
+    success_url = 'curvecalc/listview/'
 
 class CurveDeleteView(DeleteView):
     model = Tenor
