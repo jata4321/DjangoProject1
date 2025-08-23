@@ -10,15 +10,48 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <p class="display-1">Navigator</p>
-        <p class="display-4">Class Based View Navigator Page</p>
-        <ul>
-            <li><a href="{% url 'curvecalc:index' %}" class="h5">Home CurveCalc</a></li>
-            <li><a href="{% url 'portcalc:index' %}" class="h5">Home PortCalc</a></li>
-            <li><a href="{% url 'curvecalc:curve_list' %}" class="h5">CurveList</a></li>
-        </ul>
+<div class="row">
+    <p class="display-1">Navigator</p>
+</div>
+<div class="row">
+    <ul>
+        <li><a href="{% url 'curvecalc:index' %}" class="h5">Home CurveCalc</a></li>
+        <li><a href="{% url 'portcalc:index' %}" class="h5">Home PortCalc</a></li>
+    </ul>
+</div>
+<div class="row my-3 justify-content-center">
+    <div class="card-deck">
+        <div class="card mx-4" style="width: 14rem;">
+            <a href="{% url 'curvecalc:index' %}">
+            <img src="{% static 'navigator/img/calc_ycrv_dg.png' %}" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">Title claculator</h5>
+                <p class="card-text">Get me to the yield curve calculations...</p>
+                <a href="{% url 'curvecalc:index' %}" class="btn btn-primary">Go to yield curve</a></div>
+        </div>
+        <div class="card mx-4" style="width: 14rem;">
+            <a href="{% url 'curvecalc:index' %}">
+            <img src="{% static 'navigator/img/bond_dg.png' %}" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">Bond claculator</h5>
+                <p class="card-text">Get me to the bond calculations...</p>
+                <a href="{% url 'curvecalc:index' %}" class="btn btn-primary">Go to bonds</a>
+            </div>
+        </div>
+        <div class="card mx-4" style="width: 14rem;">
+            <a href="{% url 'curvecalc:index' %}">
+            <img src="{% static 'navigator/img/portfolio_dg.png' %}" class="card-img-top" alt="...">
+            </a>
+            <div class="card-body">
+                <h5 class="card-title">Portfolio claculator</h5>
+                <p class="card-text">Get me to the portfolios calculations...</p>
+                <a href="{% url 'curvecalc:index' %}" class="btn btn-primary">Go to portfolios</a>
+            </div>
+        </div>
     </div>
+</div>
 {% endblock %}
 
 {% block chart %}

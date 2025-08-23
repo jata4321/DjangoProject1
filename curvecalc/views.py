@@ -1,3 +1,4 @@
+from gc import get_objects
 from typing import Any
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
@@ -74,6 +75,11 @@ class CurveListView(ListView):
 class CurveDetailView(DetailView):
     model = Tenor
     template_name = 'curvecalc/curve_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['data'] = self.get_object()
+        return context
 
 class CurveCreateView(CreateView):
     model = Tenor

@@ -47,6 +47,20 @@
                 </table>
             </div>
     </div>
+    <div class="row justify-content-center">
+    <div class="col-md-4 mx-auto">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Curve Graph</h5>
+                <img src="{% static 'navigator/img/calc_ycrv_dg.png' %}" class="card-img-top" alt="...">
+                <p class="card-text fs-1">{{ tenor.tenor_2y }}</p>
+                <p class="card-text fs-1">{{ tenor.tenor_5y }}</p>
+                <p class="card-text fs-1">{{ tenor.tenor_10y }}</p>
+            </div>
+        </div>
+
+    </div>
+    </div>
         <div class="col-md-4 mx-auto">
             <a href="{% url 'curvecalc:curve_list' %}" class="btn btn-primary">Back to Curve List</a>
             <a href="{% url 'curvecalc:curve_update' pk=tenor.pk %}" class="btn btn-warning">Update</a>
