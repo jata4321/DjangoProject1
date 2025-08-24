@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.shortcuts import render
 from bokeh.plotting import figure, show
 from bokeh.resources import CDN
@@ -19,3 +21,6 @@ def index(request):
     context = {'chart': chart, 'data': y, 'labels': x}
 
     return render(request, 'navigator/index.html', context=context)
+
+def partial_index(request):
+    return render(request, 'navigator/partials/_index.html')

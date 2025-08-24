@@ -1,14 +1,17 @@
-<canvas id="Chart" style="background-color: rgba(234,229,225,1)"></canvas>
-    <script>
-        new Chart(document.getElementById('Chart'), {
-            type: 'doughnut',
-            data: {
-                labels: {{ labels|safe }},
-                datasets: [{
-                    label: 'Użytkownicy',
-                    data: {{ data|safe }},
-                    backgroundColor: 'rgba(54, 162, 235, 1)'
-                }],
-            },
-        });
+<canvas id="Chart" style="background-color:gainsboro; width: 100"></canvas>
+<script>
+    new Chart(document.getElementById('Chart'), {
+        type: 'doughnut',
+        data: {
+            labels: {{ labels|safe }},
+            datasets: [{
+                label: 'Użytkownicy',
+                data: {{ data|safe }},
+            }],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true
+        }
+    });
     </script>

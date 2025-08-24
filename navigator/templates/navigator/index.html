@@ -21,7 +21,7 @@
 </div>
 <div class="row my-3 justify-content-center">
     <div class="card-deck">
-        <div class="card mx-4" style="width: 14rem;">
+        <div class="card mx-4 border-secondary" style="width: 14rem;">
             <a href="{% url 'curvecalc:index' %}">
             <img src="{% static 'navigator/img/calc_ycrv_dg.png' %}" class="card-img-top" alt="...">
             </a>
@@ -30,7 +30,7 @@
                 <p class="card-text">Get me to the yield curve calculations...</p>
                 <a href="{% url 'curvecalc:index' %}" class="btn btn-primary">Go to yield curve</a></div>
         </div>
-        <div class="card mx-4" style="width: 14rem;">
+        <div class="card mx-4 border-secondary" style="width: 14rem;">
             <a href="{% url 'curvecalc:index' %}">
             <img src="{% static 'navigator/img/bond_dg.png' %}" class="card-img-top" alt="...">
             </a>
@@ -40,7 +40,7 @@
                 <a href="{% url 'curvecalc:index' %}" class="btn btn-primary">Go to bonds</a>
             </div>
         </div>
-        <div class="card mx-4" style="width: 14rem;">
+        <div class="card mx-4 border-secondary" style="width: 14rem;">
             <a href="{% url 'curvecalc:index' %}">
             <img src="{% static 'navigator/img/portfolio_dg.png' %}" class="card-img-top" alt="...">
             </a>
@@ -55,14 +55,22 @@
 {% endblock %}
 
 {% block chart %}
+    <div class="row justify-content-center">
+        <form hx-get="{% url 'navigator:_index' %}"
+              hx-target = "#to_replace"
+              hx-swap="innerHTML">
+            <button type="submit" class="btn btn-primary">Click Me!</button>
+        </form>
+    </div>
     <div class="container">
-        <div class="row">
-             <div class="col-md-6">
+        <div id="to_replace">
+            <div class="row justify-content-center">
+                <p class="display-1" style="color:blue">Old chart</p>
                 {% include 'navigator/chart.html' %}
             </div>
-            <div class='col-md-6'>
-                {{ chart|safe }}
-            </div>
+        </div>
+        <div class="row justify-content-center">
+            {{ chart|safe }}
         </div>
     </div>
 {% endblock chart %}
