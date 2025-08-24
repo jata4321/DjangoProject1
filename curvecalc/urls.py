@@ -13,4 +13,7 @@ urlpatterns = [
     path('deleteview/<int:pk>/delete/', views.CurveDeleteView.as_view(), name='curve_delete'),
     path('formview/', views.AddCurveView.as_view(), name='curve_form'),
     path('formdata/', views.CurveDataView.as_view(), name='curve_data'),
+
+    #Partials
+    path('partial-listview/', views.PartialCurveListView.as_view(), name='_curve_list'),
 ]

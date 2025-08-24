@@ -72,9 +72,38 @@ class CurveListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['date_form'] = DateRangeForm(self.request.GET)
-        context['search'] = self.request.GET.get('search') or ""
+        context['search'] = self.request.GET.get('search')
         return context
 
+class PartialCurveListView(ListView):
+    model = Tenor
+    template_name = 'curvecalc/partials/_curve_list.html'
+    paginate_by = 5
+    ordering = ['-pk']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        start_date = self.request.GET.get('start_date')
+        end_date = self.request.GET.get('end_date')
+        search_country = self.request.GET.get('search')
+
+        if start_date:
+            start_date = datetime.fromisoformat(start_date)
+            queryset = queryset.filter(date__gte=start_date)
+        if end_date:
+            end_date = datetime.fromisoformat(end_date)
+            queryset = queryset.filter(date__lte=end_date)
+
+        if search_country:
+            queryset = queryset.filter(type_name__country__country_name__icontains=search_country)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['date_form'] = DateRangeForm(self.request.GET)
+        context['search'] = self.request.GET.get('search')
+        return context
 
 class CurveDetailView(DetailView):
     model = Tenor

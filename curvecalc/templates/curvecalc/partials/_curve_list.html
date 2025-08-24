@@ -1,0 +1,19 @@
+<table class="table table-striped table-bordered table-hover table-dark mt-3"
+               style="border-radius: 4px; overflow: hidden;">
+            <thead>
+                <tr class="lead">
+                    <th class="scope-col text-center">Tenor</th>
+                    <th class="scope-col text-center">Details</th>
+                    <th class="scope-col text-center">Update</th>
+                    <th class="scope-col text-center">Delete</th>
+                </tr>
+            </thead>
+           {% for tenor in tenor_list %}
+               <tr class="table-active">
+                   <td><a href="{% url 'curvecalc:curve_detail' pk=tenor.pk%}">{{ tenor }}</a></td>
+                   <td class="text-center"><a href="{% url 'curvecalc:curve_detail' pk=tenor.pk%}" class="btn btn-primary">Details</a></td>
+                   <td class="text-center"><a href="{% url 'curvecalc:curve_update' pk=tenor.pk%}" class="btn btn-warning">Update</a></td>
+                   <td class="text-center"><a href="{% url 'curvecalc:curve_delete' pk=tenor.pk%}" class="btn btn-danger">Delete</a></td>
+               </tr>
+           {% endfor %}
+        </table>
