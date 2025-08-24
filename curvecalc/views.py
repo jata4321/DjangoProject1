@@ -1,162 +1,159 @@
-from typing import Any
+from typing import Any, Dict
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
-
+from django.urls import reverse_lazy
 from .models import Tenor
-from .forms import CurveForm
+from .forms import CurveForm, DateRangeForm
 from .calculations import addition, nss_curve, forward_curve
 import plotly.express as px
 from datetime import datetime
-from .forms import DateRangeForm
 
-# Create your views here.
+
+class CurveFilterMixin:
+    def __init__(self):
+        self.request = None
+
+    def apply_filters(self, queryset):
+        start_date = self.request.GET.get('start_date')
+        end_date = self.request.GET.get('end_date')
+        search_country = self.request.GET.get('search')
+
+        if start_date:
+            start_date = datetime.fromisoformat(start_date)
+            queryset = queryset.filter(date__gte=start_date)
+        if end_date:
+            end_date = datetime.fromisoformat(end_date)
+            queryset = queryset.filter(date__lte=end_date)
+        if search_country:
+            queryset = queryset.filter(type_name__country__country_name__icontains=search_country)
+        return queryset
+
 
 def index(request):
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May']
+    weights = [2, 3, 5, 3, 4]
 
-    x = ['sty', 'lut', 'mar', 'kwi', 'lip']
-    y = [2, 3, 5, 3, 4]
-
-    fig = px.bar(x=x,
-                 y=y,
-                 height=500,
-                 template='presentation',
-                 )
-    fig.update_layout(title_text='Wykres',
-                      title_font_size=28,
-                      title_y=0.975,
-                      title_x=0.5,
-                      xaxis_title='Miesiące',
-                      yaxis_title='Waga (kg)',
-                      )
-    chart = fig.to_html()
-    context = {'chart': chart, 'data': y, 'labels': x}
-
+    chart = create_bar_chart(months, weights)
+    context = {'chart': chart, 'data': weights, 'labels': months}
     return render(request, 'curvecalc/index.html', context=context)
+
+
+def create_bar_chart(x_values, y_values):
+    fig = px.bar(
+        x=x_values,
+        y=y_values,
+        height=500,
+        template='presentation'
+    )
+    fig.update_layout(
+        title_text='Chart',
+        title_font_size=28,
+        title_y=0.975,
+        title_x=0.5,
+        xaxis_title='Months',
+        yaxis_title='Weight (kg)',
+    )
+    return fig.to_html()
+
 
 class HomePageView(TemplateView):
     template_name = 'curvecalc/home.html'
 
     def get_context_data(self, *args, **kwargs):
-        context: dict[str, Any] = super().get_context_data(**kwargs)
-        context['addition'] = addition(10, 25, 1,2,3,4,5)
-        t, y, ytm = ([0.5,1,2,5,10], [0.027,0.03,0.032,0.0365,0.04], [0.03, 0.04,0.045,0.043,0.04])
-        context['labels'] =[round(float(val),2) for val in t]
-        context['data'] = [round(float(val),4) for val in ytm]
-        context['ytm'] = [round(float(val),4) for val in y]
+        context: Dict[str, Any] = super().get_context_data(**kwargs)
+        context['addition'] = addition(10, 25, 1, 2, 3, 4, 5)
+        tenors = [0.5, 1, 2, 5, 10]
+        yields = [0.027, 0.03, 0.032, 0.0365, 0.04]
+        ytm_values = [0.03, 0.04, 0.045, 0.043, 0.04]
+
+        context['labels'] = [round(float(val), 2) for val in tenors]
+        context['data'] = [round(float(val), 4) for val in ytm_values]
+        context['ytm'] = [round(float(val), 4) for val in yields]
         return context
 
-class CurveListView(ListView):
+
+class CurveListView(ListView, CurveFilterMixin):
     model = Tenor
     template_name = 'curvecalc/curve_list.html'
     paginate_by = 5
     ordering = ['-pk']
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        start_date = self.request.GET.get('start_date')
-        end_date = self.request.GET.get('end_date')
-        search_country = self.request.GET.get('search')
-
-        if start_date:
-            start_date = datetime.fromisoformat(start_date)
-            queryset = queryset.filter(date__gte=start_date)
-        if end_date:
-            end_date = datetime.fromisoformat(end_date)
-            queryset = queryset.filter(date__lte=end_date)
-
-        if search_country:
-            queryset = queryset.filter(type_name__country__country_name__icontains=search_country)
-
-        return queryset
+        return self.apply_filters(super().get_queryset())
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['date_form'] = DateRangeForm(self.request.GET)
-        context['search'] = self.request.GET.get('search')
+        context['search'] = self.request.GET.get('search') or ""
         return context
 
-class PartialCurveListView(ListView):
-    model = Tenor
+
+class PartialCurveListView(CurveListView):
     template_name = 'curvecalc/partials/_curve_list.html'
-    paginate_by = 5
-    ordering = ['-pk']
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        start_date = self.request.GET.get('start_date')
-        end_date = self.request.GET.get('end_date')
-        search_country = self.request.GET.get('search')
-
-        if start_date:
-            start_date = datetime.fromisoformat(start_date)
-            queryset = queryset.filter(date__gte=start_date)
-        if end_date:
-            end_date = datetime.fromisoformat(end_date)
-            queryset = queryset.filter(date__lte=end_date)
-
-        if search_country:
-            queryset = queryset.filter(type_name__country__country_name__icontains=search_country)
-
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['date_form'] = DateRangeForm(self.request.GET)
-        context['search'] = self.request.GET.get('search')
-        return context
 
 class CurveDetailView(DetailView):
     model = Tenor
     template_name = 'curvecalc/curve_detail.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['data'] = self.get_object()
-        return context
 
-class CurveCreateView(CreateView):
+class BaseCurveView:
     model = Tenor
+    success_url = reverse_lazy('curvecalc:curve_list')
+
+
+class CurveCreateView(BaseCurveView, CreateView):
     form_class = CurveForm
     template_name = 'curvecalc/curve_create.html'
-    success_url = '/curvecalc/listview/'
 
-class CurveUpdateView(UpdateView):
-    model = Tenor
+
+class CurveUpdateView(BaseCurveView, UpdateView):
     form_class = CurveForm
     template_name = 'curvecalc/curve_update.html'
-    success_url = '/curvecalc/listview/'
 
-class CurveDeleteView(DeleteView):
-    model = Tenor
+
+class CurveDeleteView(BaseCurveView, DeleteView):
     template_name = 'curvecalc/curve_delete.html'
-    success_url = '/curvecalc/listview/'
 
 
 class AddCurveView(FormView):
     template_name = 'curvecalc/curve_form.html'
     form_class = CurveForm
+    TENOR_MAPPING = {
+        0.5: 'tenor_6m',
+        1: 'tenor_1y',
+        2: 'tenor_2y',
+        5: 'tenor_5y',
+        7: 'tenor_7y',
+        10: 'tenor_10y'
+    }
 
     def __init__(self, *args, **kwargs: Any):
         super().__init__(*args, **kwargs)
         self.cleaned = None
 
+    def get_tenor_data(self, cleaned_data):
+        return {k: cleaned_data[v] for k, v in self.TENOR_MAPPING.items()
+                if cleaned_data[v] is not None}
 
     def form_valid(self, form):
         self.cleaned = form.cleaned_data
-        data_old = {k:v for k, v in form.cleaned_data.items() if v is not None}
-        data = { 0.5: self.cleaned['tenor_6m'],
-            1: self.cleaned['tenor_1y'],
-            2: self.cleaned['tenor_2y'],
-            5: self.cleaned['tenor_5y'],
-            7: self.cleaned['tenor_7y'],
-            10: self.cleaned['tenor_10y']}
-        data = {k: v for k, v in data.items() if v is not None}
-        chart_nss = nss_curve(t=list(data.keys()), y=list(data.values()))
-        chart_fwd = forward_curve(t=list(data.keys()), y=list(data.values()), forward_length_months=6)
-        context = {'form': form, 'chart_nss': chart_nss, 'chart_fwd':chart_fwd, 'data': data, 'data_old': data_old}
+        data_old = {k: v for k, v in form.cleaned_data.items() if v is not None}
+        data = self.get_tenor_data(self.cleaned)
 
-        action = self.request.POST.get('action')
-        if action == 'save':
+        chart_nss = nss_curve(t=list(data.keys()), y=list(data.values()))
+        chart_fwd = forward_curve(t=list(data.keys()), y=list(data.values()),
+                                  forward_length_months=6)
+
+        context = {
+            'form': form,
+            'chart_nss': chart_nss,
+            'chart_fwd': chart_fwd,
+            'data': data,
+            'data_old': data_old
+        }
+
+        if self.request.POST.get('action') == 'save':
             form.save()
 
         return self.render_to_response(context)
