@@ -88,11 +88,8 @@ class CurveListView(ListView, CurveFilterMixin):
         return context
 
 
-class PartialCurveListView(CurveListView, CurveFilterMixin):
+class PartialCurveListView(CurveListView):
     template_name = 'curvecalc/partials/_curve_list.html'
-
-class PartialPaginatorView(TemplateView, CurveFilterMixin):
-    template_name = 'curvecalc/partials/_paginator.html'
 
 
 class CurveDetailView(DetailView):
