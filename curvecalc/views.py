@@ -1,15 +1,11 @@
-from gc import get_objects
-from re import search
 from typing import Any
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView, FormView
-from pytz import country_names
 
-from .models import Tenor, Country
+from .models import Tenor
 from .forms import CurveForm
 from .calculations import addition, nss_curve, forward_curve
 import plotly.express as px
-from django.utils import timezone
 from datetime import datetime
 from .forms import DateRangeForm
 
@@ -76,7 +72,7 @@ class CurveListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['date_form'] = DateRangeForm(self.request.GET)
-        context['search'] = self.request.GET.get('search')
+        context['search'] = self.request.GET.get('search') or ""
         return context
 
 

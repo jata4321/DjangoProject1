@@ -3,8 +3,7 @@
 {% block static %}
     {{ block.super }}
     {% load static %}
-
-    <link rel="stylesheet" href="{% static 'curvecalc\css\styles_pro.css' %}">
+    <link rel="stylesheet" href="{% static 'curvecalc\css\pro_styles.css' %}">
 {% endblock %}
 
 {% block title %}
@@ -43,7 +42,7 @@
         </div>
         <form method="get">
             <div class="mb-3 mx-3">
-              <label for="formGroupExampleInput" class="form-label">Country label</label>
+              <label for="searchInput" class="form-label">Country label</label>
               <input type="text"
                      name="search"
                      class="form-control"
