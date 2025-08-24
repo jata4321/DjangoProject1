@@ -16,4 +16,5 @@ urlpatterns = [
 
     #Partials
     path('partial-listview/', views.PartialCurveListView.as_view(), name='_curve_list'),
+    path('partial-paginator/', views.PartialPaginatorView.as_view(), name='_paginator'),
 ]
