@@ -1,5 +1,3 @@
-from urllib import request
-
 from django.shortcuts import render
 from bokeh.plotting import figure, show
 from bokeh.resources import CDN

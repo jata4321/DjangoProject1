@@ -91,9 +91,6 @@ class CurveListView(ListView, CurveFilterMixin):
 class PartialCurveListView(CurveListView, CurveFilterMixin):
     template_name = 'curvecalc/partials/_curve_list.html'
 
-class PartialPaginatorView(TemplateView, CurveFilterMixin):
-    template_name = 'curvecalc/partials/_paginator.html'
-
 
 class CurveDetailView(DetailView):
     model = Tenor
