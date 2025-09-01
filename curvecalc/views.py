@@ -143,7 +143,7 @@ class AddCurveView(FormView):
 
         chart_nss = nss_curve(t=list(data.keys()), y=list(data.values()))
         chart_fwd = forward_curve(t=list(data.keys()), y=list(data.values()),
-                                  forward_length_months=6)
+                                  forward_length_months=12)
 
         context = {
             'form': form,

@@ -25,7 +25,7 @@ def nss_constructor(calibration, t:List[float]):
     points = np.asarray([calibration(_).round(5) for _ in t])
     return curve_nss, curve_t, points
 
-def forward_curve(t: List[float], y: List[float], forward_length_months=3) -> Optional[str]:
+def forward_curve(t: List[float], y: List[float], forward_length_months=12) -> Optional[str]:
     calibration = nss_calibrator(t, y)
     start_date = t[0]
     end_date = t[-1]
